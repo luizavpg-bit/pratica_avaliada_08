@@ -16,17 +16,21 @@ import Perfil from "./pages/perfil/Perfil";
 
 function App() {
 	return (
-				<BrowserRouter>
-					<Navbar />
-					<div className="flex flex-col min-h-[70vh] bg-slate-200">
-						<Routes>
-							<Route path="/" element={<Login />} />
-							<Route path="/cadastro" element={<Cadastro />} />
-							<Route path="/home" element={<Home />} />
-						</Routes>
-					</div>
-					<Footer />
-				</BrowserRouter>
+		<BrowserRouter>
+			<Navbar />
+			<div className="flex flex-col min-h-[70vh] bg-slate-200">
+				<Routes>
+					<Route path="/" element={<Login />} />
+					<Route path="/cadastro" element={<Cadastro />} />
+					<Route path="/home" element={<Home />} />
+					<Route path="/categorias" element={<ListarCategorias />} />
+					<Route path="/cadastrarcategoria" element={<FormCategoria />} />
+					<Route path="/editarcategoria/:id" element={<FormCategoria />} />
+					<Route path="/deletarcategoria/:id" element={<DeletarCategoria />} />
+				</Routes>
+			</div>
+			<Footer />
+		</BrowserRouter>
 	)
 }
 
