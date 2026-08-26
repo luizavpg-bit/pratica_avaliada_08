@@ -1,73 +1,131 @@
-# React + TypeScript + Vite
+<table>
+<tr>
+<td width="35%" align="center">
+<img src="https://github.com/user-attachments/assets/63ee3613-1b48-47f9-9dcc-9ca8973deb81" width="280"/>
+</td>
+<td width="65%">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# ✨ Loja de Games: Autenticação e CRUD de Categorias
 
-Currently, two official plugins are available:
+<img src="https://img.shields.io/badge/React-CDB4FF?style=for-the-badge&logoColor=white">
+<img src="https://img.shields.io/badge/TypeScript-B8C0FF?style=for-the-badge&logoColor=white">
+<img src="https://img.shields.io/badge/TailwindCSS-FFC8DD?style=for-the-badge&logoColor=white">
+<img src="https://img.shields.io/badge/Vite-BDE0FE?style=for-the-badge&logoColor=white">
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Este repositório contém a resolução da atividade prática avaliada 08, sobre consumo de API com autenticação e CRUD sem relacionamento, proposta pela Generation Brasil
 
-## React Compiler
+</td>
+</tr>
+</table>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🌸 Sobre o projeto
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Aplicação frontend da **Loja de Games**, construída em React + TypeScript + Vite, consumindo a API desenvolvida no Bloco 02. O projeto implementa cadastro e autenticação de usuários, além do CRUD completo do recurso **Categoria**, com controle de acesso a rotas internas.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🌸 Habilidades trabalhadas
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Modelagem de dados com interfaces TypeScript
+- Consumo de API REST com Axios
+- Autenticação via Context API (estado em memória)
+- Roteamento com React Router DOM
+- CRUD completo (criar, listar, atualizar, excluir)
+- Formulários controlados com validação
+- Tratamento de erros e feedback ao usuário (loaders e alerts)
+- Controle de acesso a rotas protegidas
+- Estilização responsiva com Tailwind CSS
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🌸 Estrutura do projeto
+
+```
+src/
+├── assets/
+├── components/
+│   ├── categorias/
+│   │   ├── cardcategorias/CardCategorias.tsx
+│   │   ├── deletarcategorias/DeletarCategoria.tsx
+│   │   ├── formcategoria/FormCategoria.tsx
+│   │   └── listarcategorias/ListarCategorias.tsx
+│   ├── footer/Footer.tsx
+│   ├── navbar/
+│   │   ├── Navbar.tsx
+│   │   └── SearchForm.tsx
+│   └── rotaprotegida/RotaProtegida.tsx
+├── contexts/
+│   └── AuthContext.tsx
+├── models/
+│   ├── Categoria.ts
+│   ├── Usuario.ts
+│   └── UsuarioLogin.ts
+├── pages/
+│   ├── cadastro/Cadastro.tsx
+│   ├── home/Home.tsx
+│   └── login/Login.tsx
+├── services/
+│   └── Service.ts
+├── App.tsx
+└── main.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🌸 Funcionalidades
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+**Cadastro de usuário**
+- Validação de senha (mínimo de 8 caracteres) e confirmação de senha
+- Validação de maioridade (18 anos) a partir da data de nascimento, com `dayjs`
+- Redirecionamento para o Login após cadastro bem-sucedido
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+**Login**
+- Autenticação via API com token
+- Indicador de carregamento durante a requisição
+- Redirecionamento automático para a Home após autenticação
+
+**CRUD de Categoria**
+- Listagem de categorias cadastradas
+- Cadastro de nova categoria
+- Edição de categoria existente (pré-carregando os dados)
+- Exclusão de categoria com tela de confirmação
+
+**Controle de acesso**
+- Usuários não autenticados são redirecionados para o Login ao tentar acessar rotas internas
+- Navbar e Footer exibidos apenas quando há usuário autenticado
+
+## 🌸 Rotas da aplicação
+
+| Rota | Página | Descrição |
+|---|---|---|
+| `/` | Login | Autenticação do usuário |
+| `/cadastro` | Cadastro | Cadastro de novo usuário |
+| `/home` | Home | Página inicial da loja |
+| `/categorias` | ListarCategorias | Listagem de categorias |
+| `/cadastrarcategoria` | FormCategoria | Cadastro de categoria |
+| `/editarcategoria/:id` | FormCategoria | Edição de categoria |
+| `/deletarcategoria/:id` | DeletarCategoria | Exclusão de categoria |
+
+## 🌸 Como executar
+
+1. Clone este repositório
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+3. Rode o projeto em ambiente de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+4. Acesse `http://localhost:5173` no navegador
+
+## 🌸 Tecnologias utilizadas
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router DOM
+- Axios
+- Day.js
+- React Spinners
+
+## 👤 Feito por:
+
+Luiza Paolinelli

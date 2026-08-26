@@ -1,8 +1,18 @@
+import { useContext } from "react"
 import { ListIcon, ShoppingCartIcon, SignOutIcon, UserIcon } from "@phosphor-icons/react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import SearchForm from "./SearchForm"
+import { AuthContext } from "../../contexts/AuthContext"
 
 function Navbar() {
+	const navigate = useNavigate()
+	const { handleLogout } = useContext(AuthContext)
+
+	function sair() {
+		handleLogout()
+		navigate("/")
+	}
+
 	return (
 		<>
 			{/* Navbar fixa no topo, visível em todas as telas */}
@@ -52,6 +62,7 @@ function Navbar() {
 						</Link>
 						<button
 							aria-label="Sair"
+							onClick={sair}
 							className="hover:opacity-80 transition-opacity cursor-pointer"
 						>
 							<SignOutIcon size={32} weight="bold" />
@@ -114,6 +125,7 @@ function Navbar() {
 				</Link>
 				<button
 					className="flex items-center gap-2 hover:underline text-left cursor-pointer"
+					onClick={sair}
 				>
 					<SignOutIcon size={24} weight="bold" />
 					Sair

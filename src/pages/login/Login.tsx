@@ -1,6 +1,41 @@
-import { Link } from "react-router-dom"
+import { useContext, useEffect, useState, type ChangeEvent, type FormEvent } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { BeatLoader } from "react-spinners"
+import { AuthContext } from "../../contexts/AuthContext"
+import type UsuarioLogin from "../../models/UsuarioLogin"
 
 function Login() {
+	const navigate = useNavigate()
+	const { usuario, handleLogin, isLoading } = useContext(AuthContext)
+
+	const [usuarioLogin, setUsuarioLogin] = useState<UsuarioLogin>({
+		id: 0,
+		nome: "",
+		usuario: "",
+		senha: "",
+		foto: "",
+		dataNascimento: "",
+		token: "",
+	})
+
+	useEffect(() => {
+		if (usuario.token !== "") {
+			navigate("/home")
+		}
+	}, [usuario])
+
+	function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+		setUsuarioLogin({
+			...usuarioLogin,
+			[e.target.name]: e.target.value,
+		})
+	}
+
+	function enviarLogin(e: FormEvent<HTMLFormElement>) {
+		e.preventDefault()
+		handleLogin(usuarioLogin)
+	}
+
 	return (
 		<>
 			<div
@@ -9,6 +44,7 @@ function Login() {
 			>
 				<form
 					className="flex justify-center items-center flex-col w-full max-w-sm px-6 sm:px-8 py-10 lg:py-3 gap-4"
+					onSubmit={enviarLogin}
 				>
 					<h2 className="text-slate-900 text-3xl sm:text-4xl lg:text-5xl text-center">Entrar</h2>
 					<div className="flex flex-col w-full">
@@ -19,6 +55,8 @@ function Login() {
 							name="usuario"
 							placeholder="Usuario"
 							required
+							value={usuarioLogin.usuario}
+							onChange={atualizarEstado}
 							className="border-2 border-slate-700 rounded p-2 w-full"
 						/>
 					</div>
@@ -30,15 +68,22 @@ function Login() {
 							name="senha"
 							placeholder="Senha"
 							required
+							value={usuarioLogin.senha}
+							onChange={atualizarEstado}
 							className="border-2 border-slate-700 rounded p-2 w-full"
 						/>
 					</div>
 					<button
 						type="submit"
+						disabled={isLoading}
 						className="rounded bg-slate-400 hover:bg-slate-800 flex justify-center
                                     text-white w-full sm:w-2/3 py-2"
 					>
-						<span>Entrar</span>
+						{isLoading ? (
+							<BeatLoader color="#ffffff" size={10} />
+						) : (
+							<span>Entrar</span>
+						)}
 					</button>
 
 					<hr className="border-slate-800 w-full" />
